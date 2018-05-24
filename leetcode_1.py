@@ -50,3 +50,22 @@ class Solution:
             ret_Last = ret.next
             del ret
             return ret_Last
+
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if len(s) == 0: return 0
+        left_bound = 0
+        max_value = 0
+        hash_map = {}
+        for i in range(len(s)):
+            c = s[i]
+            is_same = 0
+            if c in hash_map.keys():
+                is_same = hash_map[c] + 1
+            left_bound = max(left_bound, is_same)
+            max_value = max(max_value, i - left_bound + 1)
+            hash_map[c] = i
+        return max_value
