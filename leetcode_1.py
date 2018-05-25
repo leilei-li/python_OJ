@@ -69,3 +69,17 @@ class Solution:
             max_value = max(max_value, i - left_bound + 1)
             hash_map[c] = i
         return max_value
+
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        num3 = nums1 + nums2
+        num3 = sorted(num3)
+        l = len(num3)
+        if l % 2 == 0:
+            return float((num3[int((l - 1) / 2)] + num3[int(l / 2)]) / 2)
+        else:
+            return float(num3[int((l) / 2)])

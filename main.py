@@ -3,8 +3,7 @@ from leetcode_1 import Solution
 
 def main():
     s = Solution()
-    print(s.lengthOfLongestSubstring('pwwkew'))
-    # print('haha')
+    s.findMedianSortedArrays([1, 2], [3,4])
 
 
 if __name__ == '__main__':
