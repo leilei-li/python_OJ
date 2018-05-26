@@ -83,3 +83,25 @@ class Solution:
             return float((num3[int((l - 1) / 2)] + num3[int(l / 2)]) / 2)
         else:
             return float(num3[int((l) / 2)])
+
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        self.start_index = 0
+        self.length = 0
+        if len(s) < 2:
+            return s
+        for i in range(len(s)):
+            self.__findLongestPalindrome(s, i, i)
+            self.__findLongestPalindrome(s, i, i + 1)
+        return s[self.start_index:self.start_index + self.length]
+
+    def __findLongestPalindrome(self, s, start, end):
+        while start >= 0 and end < len(s) and s[start] == s[end]:
+            start = start - 1
+            end = end + 1
+        if self.length < end - start - 1:
+            self.start_index = start + 1
+            self.length = end - start - 1
