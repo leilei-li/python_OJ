@@ -105,3 +105,34 @@ class Solution:
         if self.length < end - start - 1:
             self.start_index = start + 1
             self.length = end - start - 1
+
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        result = []
+        if len(s) < 0 or len(s) < numRows:
+            return s
+        for i in range(len(s)):
+            result.append([])
+        index = 0
+        while index < len(s):
+            for i in range(numRows):
+                if index >= len(s):
+                    break
+                result[i].append(s[index])
+                index = index + 1
+                # 处理竖线
+            for i in range(numRows - 2, 0, -1):
+                if index >= len(s):
+                    break
+                result[i].append(s[index])
+                index = index + 1
+                # 处理斜线
+        r = ''
+        for i in range(numRows):
+            k = ''.join(result[i])
+            r = r + k
+        return r
