@@ -105,3 +105,56 @@ class Solution:
             return result
         if flag == 0:
             return 0 - result
+
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        self.start_index = 0
+        self.length = 0
+        if len(s) < 2:
+            return s
+        for i in range(len(s)):
+            self.__findLongestPalindrome(s, i, i)
+            self.__findLongestPalindrome(s, i, i + 1)
+        return s[self.start_index:self.start_index + self.length]
+
+    def __findLongestPalindrome(self, s, start, end):
+        while start >= 0 and end < len(s) and s[start] == s[end]:
+            start = start - 1
+            end = end + 1
+        if self.length < end - start - 1:
+            self.start_index = start + 1
+            self.length = end - start - 1
+
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        result = []
+        if len(s) < 0 or len(s) < numRows:
+            return s
+        for i in range(len(s)):
+            result.append([])
+        index = 0
+        while index < len(s):
+            for i in range(numRows):
+                if index >= len(s):
+                    break
+                result[i].append(s[index])
+                index = index + 1
+                # 处理竖线
+            for i in range(numRows - 2, 0, -1):
+                if index >= len(s):
+                    break
+                result[i].append(s[index])
+                index = index + 1
+                # 处理斜线
+        r = ''
+        for i in range(numRows):
+            k = ''.join(result[i])
+            r = r + k
+        return r
