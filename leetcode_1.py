@@ -84,28 +84,6 @@ class Solution:
         else:
             return float(num3[int((l) / 2)])
 
-    def reverse(self, x):
-        """
-        :type x: int
-        :rtype: int
-        """
-        if abs(x) == x:
-            flag = 1
-        else:
-            flag = 0
-        result = 0
-        x = abs(x)
-        while x != 0:
-            k = x % 10
-            result = result * 10 + k
-            x = int(x / 10)
-        if abs(result) >= 2 ** 31 - 1:
-            return 0
-        if flag == 1:
-            return result
-        if flag == 0:
-            return 0 - result
-
     def longestPalindrome(self, s):
         """
         :type s: str
@@ -158,3 +136,25 @@ class Solution:
             k = ''.join(result[i])
             r = r + k
         return r
+
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if abs(x) == x:
+            flag = 1
+        else:
+            flag = 0
+        result = 0
+        x = abs(x)
+        while x != 0:
+            k = x % 10
+            result = result * 10 + k
+            x = int(x / 10)
+        if abs(result) >= 2 ** 31 - 1:
+            return 0
+        if flag == 1:
+            return result
+        if flag == 0:
+            return 0 - result
