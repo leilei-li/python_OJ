@@ -158,3 +158,44 @@ class Solution:
             return result
         if flag == 0:
             return 0 - result
+
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        str = str.strip()
+        result = ''
+        if str == '':
+            return 0
+        flag = 1
+        if str[0] == '-':
+            flag = 0
+        elif str[0] == '+':
+            pass
+        else:
+            try:
+                int(str[0])
+                result = result + str[0]
+            except:
+                return 0
+        for i in range(1, len(str)):
+            try:
+                int(str[i])
+            except:
+                break
+            result = result + str[i]
+        try:
+            res = int(result)
+        except:
+            return 0
+        if flag == 0:
+            res = 0 - res
+            if res <= -2 ** 31:
+                return -2 ** 31
+            return res
+        if flag == 1:
+            res = res
+            if res >= 2 ** 31 - 1:
+                return 2 ** 31 - 1
+            return res
