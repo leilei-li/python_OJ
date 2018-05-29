@@ -218,3 +218,25 @@ class Solution:
         if palind == source:
             return True
         return False
+
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        dp = []
+        for i in range(len(s) + 1):
+            dp.append(False)
+        dp[len(s)] = True
+        for i in range(len(p) - 1, -1, -1):
+            if p[i] == '*':
+                for j in range(len(s) - 1, -1, -1):
+                    dp[j] = dp[j] or (dp[j + 1] and (p[i - 1] == '.' or p[i - 1] == s[j]))
+                i = i - 1
+            else:
+                for j in range(len(s)):
+                    dp[j] = dp[j + 1] and (p[i] == '.' or p[i] == s[j])
+            dp[len(s)] = False
+        return dp[0]
+
