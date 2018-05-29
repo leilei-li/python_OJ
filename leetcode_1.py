@@ -199,3 +199,22 @@ class Solution:
             if res >= 2 ** 31 - 1:
                 return 2 ** 31 - 1
             return res
+
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x < 0:
+            return False
+        if x >= 0 and x <= 9:
+            return True
+        palind = 0
+        source = x
+        while x > 0:
+            k = x % 10
+            palind = palind * 10 + k
+            x = int(x / 10)
+        if palind == source:
+            return True
+        return False
