@@ -229,7 +229,8 @@ class Solution:
         for i in range(len(s) + 1):
             dp.append(False)
         dp[len(s)] = True
-        for i in range(len(p) - 1, -1, -1):
+        i = len(p) - 1
+        while i >= 0:
             if p[i] == '*':
                 for j in range(len(s) - 1, -1, -1):
                     dp[j] = dp[j] or (dp[j + 1] and (p[i - 1] == '.' or p[i - 1] == s[j]))
@@ -237,6 +238,23 @@ class Solution:
             else:
                 for j in range(len(s)):
                     dp[j] = dp[j + 1] and (p[i] == '.' or p[i] == s[j])
-            dp[len(s)] = False
+                dp[len(s)] = False
+            i = i - 1
         return dp[0]
 
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        area = 0
+        left = 0
+        right = len(height) - 1
+        while left < right:
+            s = min(height[left], height[right]) * (right - left)
+            area = max(area, s)
+            if height[left] > height[right]:
+                right = right - 1
+            elif height[left] <= height[right]:
+                left = left + 1
+        return area
