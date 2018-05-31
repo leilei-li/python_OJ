@@ -258,3 +258,38 @@ class Solution:
             elif height[left] <= height[right]:
                 left = left + 1
         return area
+
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        M = ["", "M", "MM", "MMM"]
+        C = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"]
+        X = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"]
+        I = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"]
+        return M[int(num / 1000)] + C[int((num % 1000) / 100)] + X[int((num % 100) / 10)] + I[num % 10]
+
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        d = {}
+        d['I'] = 1
+        d['V'] = 5
+        d['X'] = 10
+        d['L'] = 50
+        d['C'] = 100
+        d['D'] = 500
+        d['M'] = 1000
+        result = 0
+        pre = 0
+        for i in range(len(s) - 1, -1, -1):
+            cur = d[s[i]]
+            if cur < pre:
+                result = result - cur
+            else:
+                result = result + cur
+            pre = cur
+        return result
