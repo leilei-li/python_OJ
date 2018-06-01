@@ -359,3 +359,20 @@ class Solution:
                     break
                 i += 1
         return ans
+
+    def threeSumClosest(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        error = 9999
+        closest = 0
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                for k in range(j + 1, len(nums)):
+                    sum = nums[i] + nums[j] + nums[k]
+                    if abs(sum - target) <= error:
+                        error = abs(sum - target)
+                        closest = sum
+        return closest
