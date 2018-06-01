@@ -293,3 +293,31 @@ class Solution:
                 result = result + cur
             pre = cur
         return result
+
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        pre_fix = ''
+        min_str = ''
+        min_len = 9999
+        for str in strs:
+            if len(str) >= min_len:
+                min_len = len(str)
+            min_str = str
+        while min_str != '':
+            flag = 1
+            for str in strs:
+                cur_str = str[:len(min_str)]
+                if cur_str == min_str:
+                    continue
+                else:
+                    min_str = min_str[:len(min_str) - 1]
+                    flag = 0
+                    break
+            if flag == 1:
+                return min_str
+        return ''
+
+        return pre_fix
