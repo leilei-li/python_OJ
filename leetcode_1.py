@@ -405,3 +405,57 @@ class Solution:
                     self.__get_phone_str(digits, position + 1, result, str + c, d)
         else:
             result.append(str)
+
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        result = []
+        nums.sort()
+        for i in range(len(nums)):
+            three_sum = target - nums[i]
+            left_list = nums[i + 1:]
+            three_sum_result = self.__threeSum_four_sum(left_list, three_sum)
+            for l in three_sum_result:
+                if [nums[i]] + l not in result:
+                    result.append([nums[i]] + l)
+        return result
+
+    def __threeSum_four_sum(self, nums, target):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        size = len(nums)
+        ans = []
+        if size <= 2:
+            return ans
+        i = 0
+        while i < size - 2:
+            tmp = target - nums[i]
+            j = i + 1
+            k = size - 1
+            while j < k:
+                if nums[j] + nums[k] < tmp:
+                    j += 1
+                elif nums[j] + nums[k] > tmp:
+                    k -= 1
+                else:
+                    ans.append([nums[i], nums[j], nums[k]])
+                    j += 1
+                    k -= 1
+                    while j < k:
+                        if nums[j] != nums[j - 1]:
+                            break
+                        if nums[k] != nums[k + 1]:
+                            break
+                        j += 1
+                        k -= 1
+            i += 1
+            while i < size - 2:
+                if nums[i] != nums[i - 1]:
+                    break
+                i += 1
+        return ans
