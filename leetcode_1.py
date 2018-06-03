@@ -476,3 +476,30 @@ class Solution:
             p_node = p_node.next
         p_node.next = x_node.next
         return pre_head.next
+
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        stack = []
+        stack2 = []
+        for c in s:
+            stack.append(c)
+        if len(s) % 2 == 1:
+            return False
+        try:
+            while len(stack) != 0:
+                k = stack.pop()
+                if k == '(' or k == '[' or k == '{':
+                    m = stack2.pop()
+                    if (k == '(' and m == ')') or (k == '[' and m == ']') or (k == '{' and m == '}'):
+
+                        continue
+                    else:
+                        return False
+                else:
+                    stack2.append(k)
+        except:
+            return False
+        return True
