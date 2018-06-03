@@ -503,3 +503,36 @@ class Solution:
         except:
             return False
         return True
+
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        result = ListNode(0)
+        cur = result
+        while (l1 is not None) and (l2 is not None):
+            cur.next = ListNode(0)
+            cur = cur.next
+            if l1.val > l2.val:
+                cur.val = l2.val
+                l2 = l2.next
+                continue
+            if l1.val < l2.val:
+                cur.val = l1.val
+                l1 = l1.next
+                continue
+            if l1.val == l2.val:
+                cur.val = l1.val
+                cur.next = ListNode(0)
+                cur = cur.next
+                l1 = l1.next
+                cur.val = l2.val
+                l2 = l2.next
+                continue
+        if l1 is not None:
+            cur.next = l1
+        if l2 is not None:
+            cur.next = l2
+        return result.next
