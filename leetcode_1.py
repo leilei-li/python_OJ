@@ -1,3 +1,6 @@
+from extra_class import *
+
+
 class Solution:
     def twoSum(self, nums, target):
         """
@@ -12,12 +15,6 @@ class Solution:
                 break
             else:
                 hashmap[target - nums[i]] = i
-
-    # Definition for singly-linked list.
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
 
     def addTwoNumbers(self, l1, l2):
         """
@@ -459,3 +456,23 @@ class Solution:
                     break
                 i += 1
         return ans
+
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        pre_head = ListNode(0)
+        pre_head.next = head
+        cur_node = head
+        for i in range(n):
+            cur_node = cur_node.next
+        x_node = head
+        p_node = pre_head
+        while cur_node is not None:
+            cur_node = cur_node.next
+            x_node = x_node.next
+            p_node = p_node.next
+        p_node.next = x_node.next
+        return pre_head.next
