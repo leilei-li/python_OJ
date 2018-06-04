@@ -536,3 +536,49 @@ class Solution:
         if l2 is not None:
             cur.next = l2
         return result.next
+
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        result = ['']
+        mm = []
+        for i in range(n * 2):
+            mm = []
+            for s in result:
+                mm.append(s + '(')
+                mm.append(s + ')')
+            result = mm
+        r = []
+        for s in result:
+            if self.__generate_valid(s):
+                r.append(s)
+        return r
+
+    def __generate_valid(self, s):
+        if s.count('(') != s.count(')'):
+            return False
+        stack1 = []
+        stack2 = []
+        for i in s:
+            stack1.append(i)
+        if stack1[-1] == '(' or stack1[0] == ')':
+            return False
+        stack2.append(stack1.pop())
+        try:
+            while len(stack1) != 0:
+                zuo = stack1[-1]
+                if zuo == '(':
+                    you = stack2[-1]
+                    if you == ')':
+                        stack1.pop()
+                        stack2.pop()
+                    else:
+                        return False
+                if zuo == ')':
+                    stack1.pop()
+                    stack2.append(zuo)
+        except:
+            return False
+        return True
