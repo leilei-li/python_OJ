@@ -4,7 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.removeDuplicates([1, 1, 2]))
+    print(s.strStr("mississippi", "issipi"))
 
 
 if __name__ == '__main__':

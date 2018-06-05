@@ -662,3 +662,27 @@ class Solution:
         while val in nums:
             nums.remove(val)
         return len(nums)
+
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if needle == '':
+            return 0
+        if len(haystack) < len(needle):
+            return -1
+        for i in range(len(haystack)):
+            s = haystack[i:]
+            if len(s) < len(needle):
+                return -1
+            if self.__is_suit(s, needle):
+                return i
+        return -1
+
+    def __is_suit(self, h, needle):
+        for i in range(len(needle)):
+            if h[i] != needle[i]:
+                return False
+        return True
