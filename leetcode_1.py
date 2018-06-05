@@ -652,3 +652,13 @@ class Solution:
             else:
                 i = i + 1
         return len(nums)
+
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        while val in nums:
+            nums.remove(val)
+        return len(nums)
