@@ -636,3 +636,19 @@ class Solution:
             tmp.next = dummy.next
             dummy.next = tmp
         return (end, start)
+
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 0
+        while i < len(nums) - 1:
+            if nums[i] == nums[i + 1]:
+                nums.remove(nums[i])
+                i = i - 1
+                if i < 0:
+                    i = 0
+            else:
+                i = i + 1
+        return len(nums)

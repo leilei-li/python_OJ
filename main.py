@@ -4,7 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.generateParenthesis(3))
+    print(s.removeDuplicates([1, 1, 2]))
 
 
 if __name__ == '__main__':
