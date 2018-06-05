@@ -582,3 +582,29 @@ class Solution:
         except:
             return False
         return True
+
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        if len(lists) == 0:
+            return lists
+        result = lists[0]
+        for i in range(1, len(lists)):
+            result = self.mergeTwoLists(lists[i], result)
+        return result
+
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head is None:
+            return head
+        if head.next is None:
+            return head
+        temp = head.next
+        head.next = self.swapPairs(temp.next)
+        temp.next = head
+        return temp
