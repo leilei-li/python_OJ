@@ -608,3 +608,31 @@ class Solution:
         head.next = self.swapPairs(temp.next)
         temp.next = head
         return temp
+
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        if head == None: return head
+        dummy = ListNode(0)
+        dummy.next = head
+        start = dummy
+        while start.next:
+            end = start
+            for i in range(k - 1):
+                end = end.next
+                if end.next == None: return dummy.next
+            (start.next, start) = self.__reverse(start.next, end.next)
+        return dummy.next
+
+    def __reverse(self, start, end):
+        dummy = ListNode(0)
+        dummy.next = start
+        while dummy.next != end:
+            tmp = start.next
+            start.next = tmp.next
+            tmp.next = dummy.next
+            dummy.next = tmp
+        return (end, start)
