@@ -753,3 +753,30 @@ class Solution:
             if j == word_size:
                 ans.append(i)
         return ans
+
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) == 0:
+            return
+        i = len(nums) - 2
+        while i >= 0 and nums[i] >= nums[i + 1]:
+            i = i - 1
+        if i >= 0:
+            j = i + 1
+            while j < len(nums) and nums[j] > nums[i]:
+                j = j + 1
+            j = j - 1
+            temp = nums[i]
+            nums[i] = nums[j]
+            nums[j] = temp
+        l = i + 1
+        r = len(nums) - 1
+        while l < r:
+            temp = nums[l]
+            nums[l] = nums[r]
+            nums[r] = temp
+            l = l + 1
+            r = r - 1
