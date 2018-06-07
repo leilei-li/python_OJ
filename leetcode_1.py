@@ -780,3 +780,27 @@ class Solution:
             nums[r] = temp
             l = l + 1
             r = r - 1
+
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if len(s) == 0:
+            return 0
+        length = 0
+        last = -1
+        stack = []
+        for i in range(len(s)):
+            if s[i] == '(':
+                stack.append(i)
+            else:
+                if len(stack) == 0:
+                    last = i
+                else:
+                    stack.pop()
+                    if len(stack) == 0:
+                        length = max(length, i - last)
+                    else:
+                        length = max(length, i - stack[-1])
+        return length
