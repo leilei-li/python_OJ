@@ -804,3 +804,39 @@ class Solution:
                     else:
                         length = max(length, i - stack[-1])
         return length
+
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        result = -1
+        index = 0
+        if len(nums) == 0:
+            return -1
+        for i in range(len(nums) - 1):
+            if nums[i] > nums[i + 1]:
+                index = i
+                break
+        low = 0
+        high = index
+        while low <= high:
+            mid = int((low + high) / 2)
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            elif nums[mid] < target:
+                low = mid + 1
+        low = index + 1
+        high = len(nums) - 1
+        while low <= high:
+            mid = int((low + high) / 2)
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            elif nums[mid] < target:
+                low = mid + 1
+        return -1

@@ -4,8 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.longestValidParentheses("((()))())"))
-    # print(s.is_valid_parentheses("((()))()"))
+    print(s.search([], 0))
 
 
 if __name__ == '__main__':
