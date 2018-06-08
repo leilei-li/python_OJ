@@ -840,3 +840,23 @@ class Solution:
             elif nums[mid] < target:
                 low = mid + 1
         return -1
+
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if len(nums) == 0:
+            return [-1, -1]
+        start = -1
+        end = -1
+        for i in range(len(nums)):
+            if nums[i] == target:
+                start = i
+                end = i
+                break
+        for i in range(start + 1, len(nums)):
+            if nums[i] == target:
+                end = i
+        return [start, end]
