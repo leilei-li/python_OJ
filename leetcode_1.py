@@ -876,3 +876,31 @@ class Solution:
                 return i
             if nums[i] < target and nums[i + 1] > target:
                 return i + 1
+
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        result = '1'
+        if n == 0 or n == 1:
+            return result
+        n = n - 1
+        while n > 0:
+            result = self.__get_new_count(result)
+            n = n - 1
+        return result
+
+    def __get_new_count(self, s):
+        result = ''
+        while len(s) != 0:
+            k = 1
+            first_letter = s[0]
+            for c in s[1:]:
+                if c == first_letter:
+                    k = k + 1
+                else:
+                    break
+            result = result + str(k) + first_letter
+            s = s[k:]
+        return result
