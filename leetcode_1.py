@@ -958,3 +958,15 @@ class Solution:
                 self.l.append(candidates[i])
                 self.__back_tracking_sum2(candidates, i + 1, target - candidates[i])
                 self.l = self.l[:(len(self.l) - 1)]
+
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 1
+        while True:
+            if i not in nums:
+                return i
+            else:
+                i = i + 1
