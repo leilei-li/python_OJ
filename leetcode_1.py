@@ -904,3 +904,28 @@ class Solution:
             result = result + str(k) + first_letter
             s = s[k:]
         return result
+
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        self.result = []
+        self.l = []
+        self.__back_tacking_sum(candidates, 0, target)
+        return self.result
+
+    def __back_tacking_sum(self, candidates, position, target):
+        if target == 0:
+            self.result.append(self.l)
+            return
+        else:
+            for i in range(position, len(candidates)):
+                if candidates[i] > target:
+                    return
+                else:
+                    self.l.append(candidates[i])
+                    self.__back_tacking_sum(candidates, i, target - candidates[i])
+                    self.l = self.l[:(len(self.l) - 1)]
