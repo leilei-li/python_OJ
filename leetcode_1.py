@@ -804,3 +804,169 @@ class Solution:
                     else:
                         length = max(length, i - stack[-1])
         return length
+
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        result = -1
+        index = 0
+        if len(nums) == 0:
+            return -1
+        for i in range(len(nums) - 1):
+            if nums[i] > nums[i + 1]:
+                index = i
+                break
+        low = 0
+        high = index
+        while low <= high:
+            mid = int((low + high) / 2)
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            elif nums[mid] < target:
+                low = mid + 1
+        low = index + 1
+        high = len(nums) - 1
+        while low <= high:
+            mid = int((low + high) / 2)
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            elif nums[mid] < target:
+                low = mid + 1
+        return -1
+
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if len(nums) == 0:
+            return [-1, -1]
+        start = -1
+        end = -1
+        for i in range(len(nums)):
+            if nums[i] == target:
+                start = i
+                end = i
+                break
+        for i in range(start + 1, len(nums)):
+            if nums[i] == target:
+                end = i
+        return [start, end]
+
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        if nums[0] > target:
+            return 0
+        if nums[-1] < target:
+            return len(nums)
+        for i in range(len(nums)):
+            if nums[i] == target:
+                return i
+            if nums[i] < target and nums[i + 1] > target:
+                return i + 1
+
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        result = '1'
+        if n == 0 or n == 1:
+            return result
+        n = n - 1
+        while n > 0:
+            result = self.__get_new_count(result)
+            n = n - 1
+        return result
+
+    def __get_new_count(self, s):
+        result = ''
+        while len(s) != 0:
+            k = 1
+            first_letter = s[0]
+            for c in s[1:]:
+                if c == first_letter:
+                    k = k + 1
+                else:
+                    break
+            result = result + str(k) + first_letter
+            s = s[k:]
+        return result
+
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        self.result = []
+        self.l = []
+        self.__back_tacking_sum(candidates, 0, target)
+        return self.result
+
+    def __back_tacking_sum(self, candidates, position, target):
+        if target == 0:
+            self.result.append(self.l)
+            return
+        else:
+            for i in range(position, len(candidates)):
+                if candidates[i] > target:
+                    return
+                else:
+                    self.l.append(candidates[i])
+                    self.__back_tacking_sum(candidates, i, target - candidates[i])
+                    self.l = self.l[:(len(self.l) - 1)]
+
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        self.result = []
+        self.l = []
+        self.__back_tracking_sum2(candidates, 0, target)
+        return self.result
+
+    def __back_tracking_sum2(self, candidates, position, target):
+        if target == 0:
+            is_exsit = False
+            for i in range(len(self.result) - 1, -1, -1):
+                exsit = self.result[i]
+                if exsit == self.l:
+                    is_exsit = True
+                    break
+            if is_exsit == False:
+                self.result.append(self.l)
+                return
+        else:
+            for i in range(position, len(candidates)):
+                self.l.append(candidates[i])
+                self.__back_tracking_sum2(candidates, i + 1, target - candidates[i])
+                self.l = self.l[:(len(self.l) - 1)]
+
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 1
+        while True:
+            if i not in nums:
+                return i
+            else:
+                i = i + 1
