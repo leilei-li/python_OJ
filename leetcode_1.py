@@ -929,3 +929,32 @@ class Solution:
                     self.l.append(candidates[i])
                     self.__back_tacking_sum(candidates, i, target - candidates[i])
                     self.l = self.l[:(len(self.l) - 1)]
+
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        self.result = []
+        self.l = []
+        self.__back_tracking_sum2(candidates, 0, target)
+        return self.result
+
+    def __back_tracking_sum2(self, candidates, position, target):
+        if target == 0:
+            is_exsit = False
+            for i in range(len(self.result) - 1, -1, -1):
+                exsit = self.result[i]
+                if exsit == self.l:
+                    is_exsit = True
+                    break
+            if is_exsit == False:
+                self.result.append(self.l)
+                return
+        else:
+            for i in range(position, len(candidates)):
+                self.l.append(candidates[i])
+                self.__back_tracking_sum2(candidates, i + 1, target - candidates[i])
+                self.l = self.l[:(len(self.l) - 1)]

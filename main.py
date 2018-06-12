@@ -4,7 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.combinationSum([2, 3, 5], 8))
+    print(s.combinationSum2([10, 1, 2, 7, 6, 1, 5], 8))
 
 
 if __name__ == '__main__':
