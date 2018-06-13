@@ -970,3 +970,34 @@ class Solution:
                 return i
             else:
                 i = i + 1
+
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if len(height) <= 2:
+            return 0
+        if len(height) == 3:
+            sum = min(height[0] - height[1], height[2] - height[1])
+            if sum > 0:
+                return sum
+            else:
+                return 0
+        left = [0] * len(height)
+        right = [0] * len(height)
+        sum = [0] * len(height)
+        for i in range(1, len(height) - 1):
+            left[i] = max(left[i - 1], height[i - 1])
+
+        for i in range(len(height) - 2, 0, -1):
+            right[i] = max(right[i + 1], height[i + 1])
+
+        for i in range(1, len(height) - 1):
+            sum[i] = min(left[i], right[i]) - height[i]
+
+        result = 0
+        for i in range(1, len(height) - 1):
+            if sum[i] > 0:
+                result = result + sum[i]
+        return result
