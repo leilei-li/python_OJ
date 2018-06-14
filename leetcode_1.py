@@ -1028,3 +1028,18 @@ class Solution:
                 else:
                     dp[j][i] = False
         return dp[len(s)][len(p)]
+
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        dp = [0] * len(nums)
+        for i in range(len(nums)):
+            max_step = min(i + nums[i], len(nums) - 1)
+            for j in range(i + 1, max_step + 1):
+                if dp[j] == 0:
+                    dp[j] = dp[i] + 1
+            if dp[len(nums) - 1] != 0:
+                return dp[len(nums) - 1]
+        return 0
