@@ -1001,3 +1001,30 @@ class Solution:
             if sum[i] > 0:
                 result = result + sum[i]
         return result
+
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        dp = [[False for _ in range(256)] for _ in range(256)]
+        l = 0
+        if len(p) != 0:
+            for i in range(len(p)):
+                if p[i] != '*':
+                    l = l + 1
+        if l > len(s):
+            return False
+        dp[0][0] = True
+        for i in range(1, len(p) + 1):
+            if dp[0][i - 1] is True and p[i - 1] == '*':
+                dp[0][i] = True
+            for j in range(1, len(s) + 1):
+                if p[i - 1] == '*':
+                    dp[j][i] = dp[j][i - 1] or dp[j - 1][i]
+                elif p[i - 1] == '?' or p[i - 1] == s[j - 1]:
+                    dp[j][i] = dp[j - 1][i - 1]
+                else:
+                    dp[j][i] = False
+        return dp[len(s)][len(p)]
