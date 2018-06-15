@@ -1043,3 +1043,31 @@ class Solution:
             if dp[len(nums) - 1] != 0:
                 return dp[len(nums) - 1]
         return 0
+
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.result = []
+        self.nums = nums
+        if len(nums) == 0:
+            return self.result
+        self.__permute_swap(0)
+        return self.result
+
+    def __permute_swap(self, i):
+        if i == len(self.nums):
+            l = []
+            for j in range(0, len(self.nums)):
+                l.append(self.nums[j])
+            self.result.append(l)
+            return
+        for j in range(i, len(self.nums)):
+            temp = self.nums[i]
+            self.nums[i] = self.nums[j]
+            self.nums[j] = temp
+            self.__permute_swap(i + 1)
+            temp = self.nums[i]
+            self.nums[i] = self.nums[j]
+            self.nums[j] = temp
