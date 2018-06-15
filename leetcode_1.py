@@ -970,3 +970,104 @@ class Solution:
                 return i
             else:
                 i = i + 1
+
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if len(height) <= 2:
+            return 0
+        if len(height) == 3:
+            sum = min(height[0] - height[1], height[2] - height[1])
+            if sum > 0:
+                return sum
+            else:
+                return 0
+        left = [0] * len(height)
+        right = [0] * len(height)
+        sum = [0] * len(height)
+        for i in range(1, len(height) - 1):
+            left[i] = max(left[i - 1], height[i - 1])
+
+        for i in range(len(height) - 2, 0, -1):
+            right[i] = max(right[i + 1], height[i + 1])
+
+        for i in range(1, len(height) - 1):
+            sum[i] = min(left[i], right[i]) - height[i]
+
+        result = 0
+        for i in range(1, len(height) - 1):
+            if sum[i] > 0:
+                result = result + sum[i]
+        return result
+
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        dp = [[False for _ in range(256)] for _ in range(256)]
+        l = 0
+        if len(p) != 0:
+            for i in range(len(p)):
+                if p[i] != '*':
+                    l = l + 1
+        if l > len(s):
+            return False
+        dp[0][0] = True
+        for i in range(1, len(p) + 1):
+            if dp[0][i - 1] is True and p[i - 1] == '*':
+                dp[0][i] = True
+            for j in range(1, len(s) + 1):
+                if p[i - 1] == '*':
+                    dp[j][i] = dp[j][i - 1] or dp[j - 1][i]
+                elif p[i - 1] == '?' or p[i - 1] == s[j - 1]:
+                    dp[j][i] = dp[j - 1][i - 1]
+                else:
+                    dp[j][i] = False
+        return dp[len(s)][len(p)]
+
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        dp = [0] * len(nums)
+        for i in range(len(nums)):
+            max_step = min(i + nums[i], len(nums) - 1)
+            for j in range(i + 1, max_step + 1):
+                if dp[j] == 0:
+                    dp[j] = dp[i] + 1
+            if dp[len(nums) - 1] != 0:
+                return dp[len(nums) - 1]
+        return 0
+
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.result = []
+        self.nums = nums
+        if len(nums) == 0:
+            return self.result
+        self.__permute_swap(0)
+        return self.result
+
+    def __permute_swap(self, i):
+        if i == len(self.nums):
+            l = []
+            for j in range(0, len(self.nums)):
+                l.append(self.nums[j])
+            self.result.append(l)
+            return
+        for j in range(i, len(self.nums)):
+            temp = self.nums[i]
+            self.nums[i] = self.nums[j]
+            self.nums[j] = temp
+            self.__permute_swap(i + 1)
+            temp = self.nums[i]
+            self.nums[i] = self.nums[j]
+            self.nums[j] = temp
