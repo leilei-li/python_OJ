@@ -1071,3 +1071,37 @@ class Solution:
             temp = self.nums[i]
             self.nums[i] = self.nums[j]
             self.nums[j] = temp
+
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.result = []
+        self.nums = nums
+        self.__permute_swap2(0, len(self.nums) - 1)
+        return self.result
+
+    def __permute_swap2(self, start, end):
+        if start == end:
+            l = []
+            for i in self.nums:
+                l.append(i)
+            self.result.append(l)
+            return
+        else:
+            for i in range(start, end + 1):
+                if self.__find_same_in_permute(start, i) == False:
+                    temp = self.nums[start]
+                    self.nums[start] = self.nums[i]
+                    self.nums[i] = temp
+                    self.__permute_swap2(start + 1, end)
+                    temp = self.nums[start]
+                    self.nums[start] = self.nums[i]
+                    self.nums[i] = temp
+
+    def __find_same_in_permute(self, start, end):
+        for i in range(start, end):
+            if self.nums[i] == self.nums[end]:
+                return True
+        return False
