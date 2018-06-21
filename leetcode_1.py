@@ -1071,3 +1071,89 @@ class Solution:
             temp = self.nums[i]
             self.nums[i] = self.nums[j]
             self.nums[j] = temp
+
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.result = []
+        self.nums = nums
+        self.__permute_swap2(0, len(self.nums) - 1)
+        return self.result
+
+    def __permute_swap2(self, start, end):
+        if start == end:
+            l = []
+            for i in self.nums:
+                l.append(i)
+            self.result.append(l)
+            return
+        else:
+            for i in range(start, end + 1):
+                if self.__find_same_in_permute(start, i) == False:
+                    temp = self.nums[start]
+                    self.nums[start] = self.nums[i]
+                    self.nums[i] = temp
+                    self.__permute_swap2(start + 1, end)
+                    temp = self.nums[start]
+                    self.nums[start] = self.nums[i]
+                    self.nums[i] = temp
+
+    def __find_same_in_permute(self, start, end):
+        for i in range(start, end):
+            if self.nums[i] == self.nums[end]:
+                return True
+        return False
+
+    def rotate(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        n = len(matrix)
+        for i in range(int(n / 2)):
+            for j in range(i, n - 1 - i):
+                temp = matrix[i][j]
+                matrix[i][j] = matrix[n - j - 1][i]
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1]
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1]
+                matrix[j][n - i - 1] = temp
+
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        r = {}
+        for str in strs:
+            is_in = False
+            for k in r.keys():
+                if self.__is_group_Anagrams(str, k):
+                    r[k].append(str)
+                    is_in = True
+                    break
+            if is_in == False:
+                r[str] = [str]
+        result = []
+        for k in r.keys():
+            result.append(r[k])
+        return result
+
+    def __is_group_Anagrams(self, a, b):
+        dict_a = {}
+        dict_b = {}
+        for i in a:
+            if i in dict_a.keys():
+                dict_a[i] = dict_a[i] + 1
+            else:
+                dict_a[i] = 1
+        for i in b:
+            if i in dict_b.keys():
+                dict_b[i] = dict_b[i] + 1
+            else:
+                dict_b[i] = 1
+        if dict_a == dict_b:
+            return True
+        else:
+            return False
