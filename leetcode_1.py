@@ -1157,3 +1157,11 @@ class Solution:
             return True
         else:
             return False
+
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        return pow(x, n)
