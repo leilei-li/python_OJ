@@ -1165,3 +1165,19 @@ class Solution:
         :rtype: float
         """
         return pow(x, n)
+
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sum = nums[0]
+        max_sum = sum
+        if sum < 0:
+            sum = 0
+        for i in range(1, len(nums)):
+            if sum < 0:
+                sum = 0
+            sum = sum + nums[i]
+            max_sum = max(sum, max_sum)
+        return max_sum

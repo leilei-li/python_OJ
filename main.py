@@ -4,7 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+    print(s.maxSubArray([-1]))
 
 
 if __name__ == '__main__':
