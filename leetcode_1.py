@@ -1181,3 +1181,19 @@ class Solution:
             sum = sum + nums[i]
             max_sum = max(sum, max_sum)
         return max_sum
+
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        dp = [False] * len(nums)
+        dp[0] = True
+        for i in range(0, len(nums)):
+            if dp[i] == True:
+                for j in range(1, nums[i] + 1):
+                    if i + j < len(nums):
+                        dp[i + j] = True
+                    else:
+                        return True
+        return dp[len(nums) - 1]
