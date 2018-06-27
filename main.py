@@ -4,7 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+    print(s.canJump([3, 2, 1, 0, 4]))
 
 
 if __name__ == '__main__':

@@ -1157,3 +1157,43 @@ class Solution:
             return True
         else:
             return False
+
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        return pow(x, n)
+
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sum = nums[0]
+        max_sum = sum
+        if sum < 0:
+            sum = 0
+        for i in range(1, len(nums)):
+            if sum < 0:
+                sum = 0
+            sum = sum + nums[i]
+            max_sum = max(sum, max_sum)
+        return max_sum
+
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        dp = [False] * len(nums)
+        dp[0] = True
+        for i in range(0, len(nums)):
+            if dp[i] == True:
+                for j in range(1, nums[i] + 1):
+                    if i + j < len(nums):
+                        dp[i + j] = True
+                    else:
+                        return True
+        return dp[len(nums) - 1]
