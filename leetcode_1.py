@@ -1197,3 +1197,14 @@ class Solution:
                     else:
                         return True
         return dp[len(nums) - 1]
+
+    def lengthOfLastWord(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        l = s.strip().split(' ')
+        try:
+            return len(l[-1])
+        except:
+            return 0
