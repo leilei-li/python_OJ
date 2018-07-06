@@ -1208,3 +1208,33 @@ class Solution:
             return len(l[-1])
         except:
             return 0
+
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        tmp = head
+        len = 0
+        while tmp is not None:
+            len = len + 1
+            tmp = tmp.next
+        if len == 0:
+            return head
+        k = k % len
+        if k == 0:
+            return head
+        cur = fast = slow = head
+        for i in range(k):
+            if fast is not None:
+                fast = fast.next
+            else:
+                return None
+        while fast.next is not None:
+            fast = fast.next
+            slow = slow.next
+        result = slow.next
+        slow.next = None
+        fast.next = cur
+        return result
