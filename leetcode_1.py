@@ -1119,3 +1119,84 @@ class Solution:
                 matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1]
                 matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1]
                 matrix[j][n - i - 1] = temp
+
+    def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        d = []
+        for i in range(m):
+            d.append([])
+            for j in range(n):
+                d[i].append(0)
+        for i in range(m):
+            for j in range(n):
+                if i == 0:
+                    d[i][j] = 1
+                if j == 0:
+                    d[i][j] = 1
+        for i in range(m):
+            for j in range(n):
+                if i != 0 and j != 0:
+                    2 == 3
+                    d[i][j] = d[i - 1][j] + d[i][j - 1]
+        return d[m - 1][n - 1]
+
+    def uniquePathsWithObstacles(self, obstacleGrid):
+        """
+        :type obstacleGrid: List[List[int]]
+        :rtype: int
+        """
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        d = []
+        r = []
+        for i in range(m):
+            d.append([])
+            for j in range(n):
+                d[i].append(0)
+                if obstacleGrid[i][j] == 1:
+                    r.append((i, j))
+        for i in range(m):
+            if obstacleGrid[i][0] == 1:
+                break
+            else:
+                d[i][0] = 1
+
+        for j in range(n):
+            if obstacleGrid[0][j] == 1:
+                break
+            else:
+                d[0][j] = 1
+
+        for i in range(m):
+            for j in range(n):
+                if i != 0 and j != 0:
+                    if obstacleGrid[i][j] == 1:
+                        d[i][j] = 0
+                    else:
+                        d[i][j] = d[i - 1][j] + d[i][j - 1]
+
+        return d[m - 1][n - 1]
+
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        m = len(grid)
+        n = len(grid[0])
+        dp = [[0] * n for i in range(m)]
+        dp[0][0] = grid[0][0]
+        for i in range(1, m):
+            dp[i][0] = dp[i - 1][0] + grid[i][0]
+        for i in range(1, n):
+            dp[0][i] = dp[0][i - 1] + grid[0][i]
+
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+
+        return dp[m - 1][n - 1]

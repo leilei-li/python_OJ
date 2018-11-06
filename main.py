@@ -4,7 +4,7 @@ from extra_class import *
 
 def main():
     s = Solution()
-    print(s.permuteUnique([1, 1, 2]))
+    print(s.minPathSum([[0,1],[1,0]]))
 
 
 if __name__ == '__main__':
