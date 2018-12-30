@@ -1194,9 +1194,203 @@ class Solution:
             dp[i][0] = dp[i - 1][0] + grid[i][0]
         for i in range(1, n):
             dp[0][i] = dp[0][i - 1] + grid[0][i]
-
         for i in range(1, m):
             for j in range(1, n):
                 dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
-
         return dp[m - 1][n - 1]
+
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        digits[-1] += 1
+        for i in range(len(digits) - 1, 0, -1):
+            if digits[i] == 10:
+                digits[i] = 0
+                digits[i - 1] += 1
+        if digits[0] == 10:
+            digits[0] = 0
+            return [1] + digits
+        else:
+            return digits
+
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        a_10 = int(a, base=2)
+        b_10 = int(b, base=2)
+        s = a_10 + b_10
+        return bin(s)[2:]
+
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        cur = 1
+        pre = 0
+        while abs(cur - pre) > 1e-6:
+            pre = cur
+            cur = pre - (pre ** 2 - x) / (2 * pre)
+        return int(cur)
+
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        dp[2] = 2
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        return dp[n]
+
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+        col = False
+        row = False
+        for i in range(m):
+            if matrix[i][0] == 0:
+                col = True
+                break
+        for i in range(n):
+            if matrix[0][i] == 0:
+                row = True
+                break
+
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = 0
+                    matrix[0][j] = 0
+
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+
+        if col:
+            for i in range(m):
+                matrix[i][0] = 0
+        if row:
+            for i in range(n):
+                matrix[0][i] = 0
+
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        try:
+            m = len(matrix)
+            n = len(matrix[0])
+        except:
+            return False
+        if m == 0 or n == 0:
+            return False
+        row = 0
+        for i in range(m):
+            if matrix[i][0] == target or matrix[i][n - 1] == target:
+                return True
+            if matrix[i][0] < target and matrix[i][n - 1] > target:
+                row = i
+                break
+
+        left = 0
+        right = n - 1
+        while left < right:
+            mid = int((left + right) / 2)
+            if matrix[row][mid] == target:
+                return True
+            if matrix[row][mid] > target:
+                right = mid - 1
+                continue
+            if matrix[row][mid] < target:
+                left = mid + 1
+                continue
+        return False
+
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        pre = 0
+        end = len(nums) - 1
+        while i <= end:
+            if nums[i] == 0:
+                self.__swap(nums, i, pre)
+                pre += 1
+                i += 1
+            elif nums[i] == 2:
+                self.__swap(nums, i, end)
+                end -= 1
+            else:
+                i += 1
+
+    def __swap(self, nums, i, j):
+        tmp = nums[i]
+        nums[i] = nums[j]
+        nums[j] = tmp
+
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        start = 1
+        depth = k
+        cur_list = []
+        result = []
+        self.__dfs(start, n, depth, cur_list, result)
+        return result
+
+    def __dfs(self, start, n, depth, cur_list, result):
+        if depth == 0:
+            result.append(cur_list.copy())
+            return
+        else:
+            for i in range(start, n + 1):
+                cur_list.append(i)
+                self.__dfs(i + 1, n, depth - 1, cur_list, result)
+                cur_list.pop()
+
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        start = 0
+        cur_list = []
+        result = []
+        self.__dfs2(start, nums, cur_list, result)
+        return result
+
+    def __dfs2(self, start, nums, cur_list, result):
+        result.append(cur_list.copy())
+        for i in range(start, len(nums)):
+            cur_list.append(nums[i])
+            self.__dfs2(i + 1, nums, cur_list, result)
+            cur_list.pop()
+
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.removeDuplicates([1, 1, 1, 2, 2, 3]))
+    print(s.nums)
