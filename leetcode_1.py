@@ -1120,6 +1120,84 @@ class Solution:
                 matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1]
                 matrix[j][n - i - 1] = temp
 
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        r = {}
+        for str in strs:
+            is_in = False
+            for k in r.keys():
+                if self.__is_group_Anagrams(str, k):
+                    r[k].append(str)
+                    is_in = True
+                    break
+            if is_in == False:
+                r[str] = [str]
+        result = []
+        for k in r.keys():
+            result.append(r[k])
+        return result
+
+    def __is_group_Anagrams(self, a, b):
+        dict_a = {}
+        dict_b = {}
+        for i in a:
+            if i in dict_a.keys():
+                dict_a[i] = dict_a[i] + 1
+            else:
+                dict_a[i] = 1
+        for i in b:
+            if i in dict_b.keys():
+                dict_b[i] = dict_b[i] + 1
+            else:
+                dict_b[i] = 1
+        if dict_a == dict_b:
+            return True
+        else:
+            return False
+
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        return pow(x, n)
+
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sum = nums[0]
+        max_sum = sum
+        if sum < 0:
+            sum = 0
+        for i in range(1, len(nums)):
+            if sum < 0:
+                sum = 0
+            sum = sum + nums[i]
+            max_sum = max(sum, max_sum)
+        return max_sum
+
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        dp = [False] * len(nums)
+        dp[0] = True
+        for i in range(0, len(nums)):
+            if dp[i] == True:
+                for j in range(1, nums[i] + 1):
+                    if i + j < len(nums):
+                        dp[i + j] = True
+                    else:
+                        return True
+        return dp[len(nums) - 1]
+
     def uniquePaths(self, m, n):
         """
         :type m: int
