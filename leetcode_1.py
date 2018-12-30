@@ -1389,6 +1389,9 @@ class Solution:
             self.__dfs2(i + 1, nums, cur_list, result)
             cur_list.pop()
 
+    def hit_test(self):
+        pass
+
 
 if __name__ == '__main__':
     s = Solution()
