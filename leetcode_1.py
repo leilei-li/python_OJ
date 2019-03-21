@@ -1238,3 +1238,28 @@ class Solution:
         slow.next = None
         fast.next = cur
         return result
+
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        cur_list = []
+        result = []
+        self.__get_combine(1, n, k, cur_list, result)
+        return result
+
+    def __get_combine(self, depth, n, k, cur_list, result):
+        if k == 0:
+            result.append(cur_list.copy())
+            return
+        for i in range(depth, n + 1):
+            cur_list.append(i)
+            self.__get_combine(i + 1, n, k - 1, cur_list, result)
+            cur_list.pop()
+
+
+if __name__ == '__main__':
+    s = Solution()
+    print(s.combine(4, 2))
