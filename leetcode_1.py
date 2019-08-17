@@ -1198,46 +1198,233 @@ class Solution:
                         return True
         return dp[len(nums) - 1]
 
-    def lengthOfLastWord(self, s):
+    def uniquePaths(self, m, n):
         """
-        :type s: str
+        :type m: int
+        :type n: int
         :rtype: int
         """
-        l = s.strip().split(' ')
-        try:
-            return len(l[-1])
-        except:
-            return 0
+        d = []
+        for i in range(m):
+            d.append([])
+            for j in range(n):
+                d[i].append(0)
+        for i in range(m):
+            for j in range(n):
+                if i == 0:
+                    d[i][j] = 1
+                if j == 0:
+                    d[i][j] = 1
+        for i in range(m):
+            for j in range(n):
+                if i != 0 and j != 0:
+                    2 == 3
+                    d[i][j] = d[i - 1][j] + d[i][j - 1]
+        return d[m - 1][n - 1]
 
-    def rotateRight(self, head, k):
+    def uniquePathsWithObstacles(self, obstacleGrid):
         """
-        :type head: ListNode
-        :type k: int
-        :rtype: ListNode
+        :type obstacleGrid: List[List[int]]
+        :rtype: int
         """
-        tmp = head
-        len = 0
-        while tmp is not None:
-            len = len + 1
-            tmp = tmp.next
-        if len == 0:
-            return head
-        k = k % len
-        if k == 0:
-            return head
-        cur = fast = slow = head
-        for i in range(k):
-            if fast is not None:
-                fast = fast.next
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+        d = []
+        r = []
+        for i in range(m):
+            d.append([])
+            for j in range(n):
+                d[i].append(0)
+                if obstacleGrid[i][j] == 1:
+                    r.append((i, j))
+        for i in range(m):
+            if obstacleGrid[i][0] == 1:
+                break
             else:
-                return None
-        while fast.next is not None:
-            fast = fast.next
-            slow = slow.next
-        result = slow.next
-        slow.next = None
-        fast.next = cur
-        return result
+                d[i][0] = 1
+
+        for j in range(n):
+            if obstacleGrid[0][j] == 1:
+                break
+            else:
+                d[0][j] = 1
+
+        for i in range(m):
+            for j in range(n):
+                if i != 0 and j != 0:
+                    if obstacleGrid[i][j] == 1:
+                        d[i][j] = 0
+                    else:
+                        d[i][j] = d[i - 1][j] + d[i][j - 1]
+
+        return d[m - 1][n - 1]
+
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        m = len(grid)
+        n = len(grid[0])
+        dp = [[0] * n for i in range(m)]
+        dp[0][0] = grid[0][0]
+        for i in range(1, m):
+            dp[i][0] = dp[i - 1][0] + grid[i][0]
+        for i in range(1, n):
+            dp[0][i] = dp[0][i - 1] + grid[0][i]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j]
+        return dp[m - 1][n - 1]
+
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        digits[-1] += 1
+        for i in range(len(digits) - 1, 0, -1):
+            if digits[i] == 10:
+                digits[i] = 0
+                digits[i - 1] += 1
+        if digits[0] == 10:
+            digits[0] = 0
+            return [1] + digits
+        else:
+            return digits
+
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        a_10 = int(a, base=2)
+        b_10 = int(b, base=2)
+        s = a_10 + b_10
+        return bin(s)[2:]
+
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        cur = 1
+        pre = 0
+        while abs(cur - pre) > 1e-6:
+            pre = cur
+            cur = pre - (pre ** 2 - x) / (2 * pre)
+        return int(cur)
+
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        dp[2] = 2
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        return dp[n]
+
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        m = len(matrix)
+        n = len(matrix[0])
+        col = False
+        row = False
+        for i in range(m):
+            if matrix[i][0] == 0:
+                col = True
+                break
+        for i in range(n):
+            if matrix[0][i] == 0:
+                row = True
+                break
+
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = 0
+                    matrix[0][j] = 0
+
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+
+        if col:
+            for i in range(m):
+                matrix[i][0] = 0
+        if row:
+            for i in range(n):
+                matrix[0][i] = 0
+
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        try:
+            m = len(matrix)
+            n = len(matrix[0])
+        except:
+            return False
+        if m == 0 or n == 0:
+            return False
+        row = 0
+        for i in range(m):
+            if matrix[i][0] == target or matrix[i][n - 1] == target:
+                return True
+            if matrix[i][0] < target and matrix[i][n - 1] > target:
+                row = i
+                break
+
+        left = 0
+        right = n - 1
+        while left < right:
+            mid = int((left + right) / 2)
+            if matrix[row][mid] == target:
+                return True
+            if matrix[row][mid] > target:
+                right = mid - 1
+                continue
+            if matrix[row][mid] < target:
+                left = mid + 1
+                continue
+        return False
+
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        pre = 0
+        end = len(nums) - 1
+        while i <= end:
+            if nums[i] == 0:
+                self.__swap(nums, i, pre)
+                pre += 1
+                i += 1
+            elif nums[i] == 2:
+                self.__swap(nums, i, end)
+                end -= 1
+            else:
+                i += 1
+
+    def __swap(self, nums, i, j):
+        tmp = nums[i]
+        nums[i] = nums[j]
+        nums[j] = tmp
 
     def combine(self, n, k):
         """
@@ -1245,21 +1432,46 @@ class Solution:
         :type k: int
         :rtype: List[List[int]]
         """
+        start = 1
+        depth = k
         cur_list = []
         result = []
-        self.__get_combine(1, n, k, cur_list, result)
+        self.__dfs(start, n, depth, cur_list, result)
         return result
 
-    def __get_combine(self, depth, n, k, cur_list, result):
-        if k == 0:
+    def __dfs(self, start, n, depth, cur_list, result):
+        if depth == 0:
             result.append(cur_list.copy())
             return
-        for i in range(depth, n + 1):
-            cur_list.append(i)
-            self.__get_combine(i + 1, n, k - 1, cur_list, result)
+        else:
+            for i in range(start, n + 1):
+                cur_list.append(i)
+                self.__dfs(i + 1, n, depth - 1, cur_list, result)
+                cur_list.pop()
+
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        start = 0
+        cur_list = []
+        result = []
+        self.__dfs2(start, nums, cur_list, result)
+        return result
+
+    def __dfs2(self, start, nums, cur_list, result):
+        result.append(cur_list.copy())
+        for i in range(start, len(nums)):
+            cur_list.append(nums[i])
+            self.__dfs2(i + 1, nums, cur_list, result)
             cur_list.pop()
+
+    def hit_test(self):
+        pass
 
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.combine(4, 2))
+    print(s.removeDuplicates([1, 1, 1, 2, 2, 3]))
+    print(s.nums)
